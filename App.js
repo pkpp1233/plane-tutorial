@@ -1,19 +1,47 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {PureComponent} from 'react';
+import {StatusBar, Text, StyleSheet, View} from 'react-native';
+import Entities from './entities';
+import {GameEngine} from 'react-native-game-engine';
+import Systems from './systems';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+export default class App extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      running: true,
+    };
+    this.gameEngine = null;
+    console.disableYellowBox = true;
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <GameEngine
+          ref={ref => {
+            this.gameEngine = ref;
+          }}
+          style={styles.gameContainer}
+          entities={Entities()}
+          systems={Systems}
+          running={this.state.running}>
+          <StatusBar hidden={true} />
+        </GameEngine>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#000',
+  },
+  gameContainer: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
