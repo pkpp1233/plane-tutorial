@@ -1,6 +1,9 @@
 import Plane from '../components/Plane';
 import Floor from '../components/Floor';
 import Ceiling from '../components/Ceiling';
+import Obstacle from '../components/Obstacle';
+import {getRandom,topObstacleHeight, bottomObstacleHeight} from '../utils/random';
+import Constants from '../utils/constants';
 import Matter from 'matter-js';
 import {height, width, heightRatio, widthRatio} from '../utils/styleSheet';
 
@@ -27,5 +30,7 @@ export default restart => {
     ),
     Floor: Floor(world,'transparent',{x: width / 2, y: height - 50},{height: 100, width: width}),
     Ceiling: Ceiling(world,'white',{x: width / 2, y: 0},{height: 100, width: width}),
+    Obstacle1: Obstacle(world,'top',{x: width * 2 - Constants.TOP_PIPE_WIDTH / 2, y: getRandom(100, 400)},{height: topObstacleHeight, width: Constants.TOP_PIPE_WIDTH}),
+    Obstacle2: Obstacle(world,'bottom',{x: width - Constants.BOTTOM_PIPE_WIDTH / 2,y: getRandom(400, 700)},{height: bottomObstacleHeight, width: Constants.BOTTOM_PIPE_WIDTH}),
   };
 };

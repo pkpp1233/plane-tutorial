@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {StatusBar, Text, StyleSheet, View} from 'react-native';
+import {StatusBar, Text, StyleSheet, View, Alert} from 'react-native';
 import Entities from './entities';
 import {GameEngine} from 'react-native-game-engine';
 import Systems from './systems';
@@ -14,6 +14,15 @@ export default class App extends PureComponent {
     console.disableYellowBox = true;
   }
 
+  onEvent = e => 
+  {
+    if (e.type === 'gameOver') {
+      this.setState({running: false});
+      this.gameEngine.swap(Entities());
+      this.setState({running: true});
+    } 
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -22,6 +31,7 @@ export default class App extends PureComponent {
             this.gameEngine = ref;
           }}
           style={styles.gameContainer}
+          onEvent={this.onEvent}
           entities={Entities()}
           systems={Systems}
           running={this.state.running}>
